@@ -42,7 +42,15 @@ endif
 
 "End dein Scripts-------------------------
 
-set relativenumber
+"set relativenumber
+
+set number relativenumber
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 set tabstop=2
 set shiftwidth=2
@@ -98,6 +106,11 @@ let g:coc_global_extensions = [
   \ 'coc-tsserver'
   \ ]
 
+" enable line numbers
+let NERDTreeShowLineNumbers=1
+" make sure relative line numbers are used
+autocmd FileType nerdtree setlocal relativenumber
+
 nnoremap <Leader>jh <Plug>(JsFileImportList)
 
 let g:ale_fixers = {
@@ -127,6 +140,27 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 
+let g:gitgutter_max_signs = 500  " default value (Vim < 8.1.0614, Neovim < 0.4.0)
+let g:gitgutter_max_signs = -1   " default value (otherwise)
+
+" Gutter
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+
+command! Gqf GitGutterQuickFix | copen
+
+nmap ghs <Plug>(GitGutterStageHunk)
+nmap ghu <Plug>(GitGutterUndoHunk)
+nmap ghp <Plug>(GitGutterPreviewHunk)
+
+function! GitStatus()
+  let [a,m,r] = GitGutterGetHunkSummary()
+  return printf('+%d ~%d -%d', a, m, r)
+endfunction
+set statusline+=%{GitStatus()}
+
+" ...
+" Gutter
 
 let $NVIM_NODE_LOG_FILE='nvim-node.log'
 let $NVIM_NODE_LOG_LEVEL='warn'
@@ -135,8 +169,6 @@ let $NVIM_NODE_LOG_LEVEL='warn'
 let g:vimspector_enable_mappings='HUMAN'
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
-
-" ...
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
