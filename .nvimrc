@@ -23,8 +23,13 @@ if dein#load_state('/Users/eduard/.cache/dein')
   "call dein#add('Shougo/neosnippet-snippets')
   call dein#add('HerringtonDarkholme/yats.vim')
   call dein#add('mhartington/nvim-typescript', {'build': './install.sh'})
+  call dein#add('mileszs/ack.vim')
+  call dein#add('thaerkh/vim-workspace')
+
+  call dein#add('vim-airline/vim-airline')
+  call dein#add('vim-airline/vim-airline-themes')
  " For async completion
-  call dein#add('Shougo/deoplete.nvim')
+ " call dein#add('Shougo/deoplete.nvim')
  " For Denite features
   call dein#add('Shougo/denite.nvim') 
 
@@ -66,7 +71,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
-Plugin 'mhartington/deoplete-typescript', { 'do': 'npm install -g typescript', 'for': 'typescript' }
+" Plugin 'mhartington/deoplete-typescript', { 'do': 'npm install -g typescript', 'for': 'typescript' }
 Plugin 'peitalin/vim-jsx-typescript'
 Plugin 'pangloss/vim-javascript'    " JavaScript support
 Plugin 'maxmellon/vim-jsx-pretty'   " JS and JSX syntax
@@ -74,7 +79,6 @@ Plugin 'jparise/vim-graphql'        " GraphQL syntax
 Plugin 'eslint/eslint'
 Plugin 'w0rp/ale'
 Plugin 'preservim/nerdtree'
-Plugin 'idbrii/vim-ack'
 Plugin 'frazrepo/vim-rainbow'
 Plugin 'tpope/vim-fugitive'
 Plugin 'puremourning/vimspector'
@@ -82,8 +86,15 @@ Plugin 'neoclide/coc.nvim', {'rev': '*', 'branch':'release'}
 Plugin 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plugin 'doums/darcula'
 
-let g:deoplete#enable_at_startup = 1
-
+"let g:deoplete#enable_at_startup = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#formatter = 'jsformatter'
+" VIM-WORKSPACE
+let g:workspace_autosave_always = 1
+let g:workspace_autosave_untrailspaces = 0
+"
 "split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -172,8 +183,6 @@ command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
-
-let g:deoplete#enable_at_startup = 1
 
 filetype plugin indent on    " required
 
